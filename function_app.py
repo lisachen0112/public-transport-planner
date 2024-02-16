@@ -43,7 +43,7 @@ def get_tfl_data(departure, arrival):
 
 
 @app.route(route="journey")
-def main(req: func.HttpRequest) -> func.HttpResponse:
+def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     departure = req.params.get('departure')

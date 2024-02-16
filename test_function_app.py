@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from function_app import get_tfl_data, main
+from function_app import get_tfl_data, public_transport_planner
 import azure.functions as func
 
 
@@ -64,7 +64,7 @@ def test_success_endpoint():
                            params={'departure': 'w36ad',
                                    'arrival': 'sw72az'})
     # Call the function.
-    func_call = main.build().get_user_function()
+    func_call = public_transport_planner.build().get_user_function()
     resp = func_call(req)
     # Check the output.
     assert resp.status_code == 200
@@ -76,7 +76,7 @@ def test_fail_endpoint():
                            body=None,
                            url='/api/journey')
     # Call the function.
-    func_call = main.build().get_user_function()
+    func_call = public_transport_planner.build().get_user_function()
     resp = func_call(req)
     # Check the output.
     assert resp.status_code == 400
