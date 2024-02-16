@@ -100,6 +100,6 @@ jobs:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
           slot-name: 'public-transport-planner-dev'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F117FF3997D14163BBB19591FE9B04A2 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           scm-do-build-during-deployment: true
           enable-oryx-build: true
