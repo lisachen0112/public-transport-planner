@@ -69,6 +69,7 @@ def test_success_endpoint():
     # Check the output.
     assert resp.status_code == 200
 
+
 def test_fail_endpoint():
     # Construct a mock HTTP request.
     req = func.HttpRequest(method='GET',
