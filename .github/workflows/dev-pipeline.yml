@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'production'
+      name: 'public-transport-planner-dev'
       url: ${{ steps.deploy-to-function.outputs.webapp-url }}
 
     steps:
@@ -98,7 +98,7 @@ jobs:
         id: deploy-to-function
         with:
           app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-          slot-name: 'production'
+          slot-name: 'public-transport-planner-dev'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F117FF3997D14163BBB19591FE9B04A2 }}
           scm-do-build-during-deployment: true

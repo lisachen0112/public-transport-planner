@@ -50,7 +50,7 @@ def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
     arrival = req.params.get('arrival')
 
     if not departure or not arrival:
-        return func.HttpResponse("Please pass a departure and arrival on the query string or in the request body", status_code=400)
+        return func.HttpResponse("Please pass a departure and arrival on the query string or in the request body!", status_code=400)
     else:
         try:
             data, status = get_tfl_data(departure, arrival)
