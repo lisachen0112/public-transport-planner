@@ -46,6 +46,12 @@ def get_tfl_data(departure, arrival):
 def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
+    headers = {
+        'Access-Control-Allow-Origin': '*',  # Replace '*' with your allowed domain if applicable
+        'Access-Control-Allow-Methods': 'GET, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type',
+    }
+
     departure = req.params.get('departure')
     arrival = req.params.get('arrival')
 
@@ -54,6 +60,6 @@ def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
     else:
         try:
             data, status = get_tfl_data(departure, arrival)
-            return func.HttpResponse(json.dumps(data), status_code=status, mimetype="application/json")
+            return func.HttpResponse(json.dumps(data), status_code=status, headers=headers, mimetype="application/json")
         except Exception as e:
             return str(e), 500
