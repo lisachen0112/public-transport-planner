@@ -50,6 +50,7 @@ def test_get_tfl_data_failure(mock_requests_get):
     # Mock a failed response from the API
     mock_requests_get.return_value.status_code = 404
 
+
     result, status = get_tfl_data('start', 'end', 'noSolidStairs')
     assert status == 404
 
