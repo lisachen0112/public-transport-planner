@@ -27,7 +27,7 @@ def test_get_tfl_data_success(mock_requests_get):
     mock_requests_get.return_value.status_code = 200
 
     # Call the function with mock data
-    result, status = get_tfl_data('start', 'end')
+    result, status = get_tfl_data('start', 'end', 'noSolidStairs')
 
     # Assert the expected result
     expected_result = {
@@ -51,9 +51,9 @@ def test_get_tfl_data_failure(mock_requests_get):
     # Mock a failed response from the API
     mock_requests_get.return_value.status_code = 404
 
-    # Call the function with mock data and assert the exception
-    with pytest.raises(Exception, match="Failed to get data: 404"):
-        result, status = get_tfl_data('start', 'end')
+
+    result, status = get_tfl_data('start', 'end', 'noSolidStairs')
+    assert status == 404
 
 
 def test_success_endpoint():
