@@ -6,16 +6,16 @@ import requests
 app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
 
 
-def get_tfl_data(departure, arrival):
+def get_tfl_data(departure, arrival, access_params):
 
     BASE_URL = f"https://api.tfl.gov.uk/journey/journeyresults/{departure}/to/{arrival}"
 
     response = requests.get(BASE_URL,
                             params={'mode': "walking,tube,bus,dlr,elizabeth-line,overground,tram",
-                                    'accessibilityPreference': "StepFreeToVehicle,StepFreeToPlatform,NoSolidStairs"})
+                                    'accessibilityPreference': access_params})
     status = response.status_code
     if status != 200:
-        raise Exception(f"Failed to get data: {response.status_code}")
+        data = response.json()
     else:
         response = response.json()['journeys'][0]
         data = {}
@@ -54,12 +54,13 @@ def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
 
     departure = req.params.get('departure')
     arrival = req.params.get('arrival')
+    accessibility_option = req.params.get('accessibility')
 
     if not departure or not arrival:
-        return func.HttpResponse("Please pass a departure and arrival on the query string or in the request body! Testing", status_code=400)
+        return func.HttpResponse("Please pass a departure and arrival location!", status_code=400)
     else:
         try:
-            data, status = get_tfl_data(departure, arrival)
-            return func.HttpResponse(json.dumps(data), status_code=status, headers=headers, mimetype="application/json")
-        except Exception as e:
-            return str(e), 500
+            data, status = get_tfl_data(departure, arrival, accessibility_option)
+        except:
+            return "Failed to get tfl data", 500
+        return func.HttpResponse(json.dumps(data), status_code=status, headers=headers, mimetype="application/json")
