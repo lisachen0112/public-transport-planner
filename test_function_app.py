@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 from function_app import get_tfl_data, public_transport_planner
 import azure.functions as func
@@ -50,7 +49,6 @@ def test_get_tfl_data_success(mock_requests_get):
 def test_get_tfl_data_failure(mock_requests_get):
     # Mock a failed response from the API
     mock_requests_get.return_value.status_code = 404
-
 
     result, status = get_tfl_data('start', 'end', 'noSolidStairs')
     assert status == 404
