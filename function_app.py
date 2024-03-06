@@ -60,7 +60,7 @@ def public_transport_planner(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse("Please pass a departure and arrival location!", status_code=400)
     else:
         try:
-            data, status = get_tfl_data(departure, arrival)
-            return func.HttpResponse(json.dumps(data), status_code=status, headers=headers, mimetype="application/json")
-        except Exception as e:
-            return str(e), 500
+            data, status = get_tfl_data(departure, arrival, accessibility_option)
+        except:
+            return "Failed to get tfl data", 500
+        return func.HttpResponse(json.dumps(data), status_code=status, headers=headers, mimetype="application/json")
